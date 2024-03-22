@@ -9,7 +9,10 @@ class Tensor:
             shape.append(len(matrix))
             matrix = matrix[0] if matrix else []  # Handle empty lists correctly
         return tuple(shape)
-
+    def is_dense(self, X):
+        return hasattr(X, '_dense_identifier')
+    def is_sparse(self, X):
+        return hasattr(X, '_sparse_identifier')
     def _broadcast_shape(self, shape_a, shape_b):
         """Calculate the broadcasted shape of two shapes."""
         # Convert shapes to tuples to ensure consistency
@@ -58,8 +61,12 @@ class Tensor:
     def _element_wise_operation(self, other, op):
         if not isinstance(other, Tensor):
             raise ValueError("Other operand must be a Matrix instance")
-        result_shape = self._broadcast_shape(self.shape, other.shape)
-        broadcasted_self = self._broadcast_to(self.data, result_shape)
-        broadcasted_other = other._broadcast_to(other.data, result_shape)
-        result_data = self.apply_op(broadcasted_self, broadcasted_other, op)
+        #check if broadcasting is needed
+        if self.shape != other.shape:
+            result_shape = self._broadcast_shape(self.shape, other.shape)
+            broadcasted_self = self._broadcast_to(self.data, result_shape)
+            broadcasted_other = other._broadcast_to(other.data, result_shape)
+            result_data = self.apply_op(broadcasted_self, broadcasted_other, op)
+        else:
+            result_data = self.apply_op(self.data, other.data, op)        
         return result_data
