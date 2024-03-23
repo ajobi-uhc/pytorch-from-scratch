@@ -21,7 +21,7 @@ Make sure you have the following dependencies installed:
 Results:
 
 Plot of basic arithmetic matrix operation efficiency
-![basic arithmetic operations](https://github.com/ajobi-uhc/pytorch-from-scratch/blob/plots_final/addition_operation_performance_comparison.png?raw=true)
+![basic arithmetic operations](plots_final/addition_operation_performance_comparison.png)
 
 
 
