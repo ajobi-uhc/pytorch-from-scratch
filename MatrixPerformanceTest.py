@@ -11,25 +11,25 @@ import pstats
 import os
 import numpy as np
 
-sizes = [50, 100, 200, 400, 800, 1600]  # Example sizes
+sizes = [50, 100, 200, 400, 800]  # Example sizes
 class MatrixPerformanceTest(unittest.TestCase):
     def execute_and_profile(self, op_name, operation, matrix_instance):
         # Measure execution time
         operation(matrix_instance)
 
         # Profile the operation
-        # profiler = cProfile.Profile()
-        # profiler.enable()
+        profiler = cProfile.Profile()
+        profiler.enable()
 
         start_time = time.time()
         operation(matrix_instance)
         execution_time = time.time() - start_time
 
-        # profiler.disable()
+        profiler.disable()
         
-        # ps = pstats.Stats(profiler).strip_dirs().sort_stats('cumulative')
-        print(f'\nProfiling for {op_name}:')
-        # ps.print_stats(10)  # Print stats for the top 10 functions
+        ps = pstats.Stats(profiler).strip_dirs().sort_stats('cumulative')
+        print(f'\nProfiling for {op_name}:', matrix_instance.__class__.__name__)
+        ps.print_stats(10)  # Print stats for the top 10 functions
 
         return execution_time
     
