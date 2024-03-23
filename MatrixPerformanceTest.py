@@ -14,18 +14,6 @@ import numpy as np
 sizes = [50, 100, 200, 400, 800, 1600]  # Example sizes
 class MatrixPerformanceTest(unittest.TestCase):
     def execute_and_profile(self, op_name, operation, matrix_instance):
-        """
-        Executes the given operation on the matrix_instance, measures execution time,
-        profiles the operation, and returns the execution time and profiling summary.
-
-        Parameters:
-        - operation: The matrix operation to perform.
-        - matrix_instance: The matrix instance on which to perform the operation.
-
-        Returns:
-        - execution_time: The time taken to execute the operation.
-        - profile_summary: A summary of the profiling information.
-        """
         # Measure execution time
         operation(matrix_instance)
 
