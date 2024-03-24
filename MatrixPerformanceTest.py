@@ -11,7 +11,7 @@ import pstats
 import os
 import numpy as np
 
-sizes = [50, 100, 200, 400, 800]  # Example sizes
+sizes = [50, 100, 200, 400]  # Example sizes
 class MatrixPerformanceTest(unittest.TestCase):
     def execute_and_profile(self, op_name, operation, matrix_instance):
         # Measure execution time
@@ -35,6 +35,7 @@ class MatrixPerformanceTest(unittest.TestCase):
     
     @staticmethod
     def plot_performance(sizes, results, title='Performance Comparison', ylabel='Execution Time (seconds)'):
+        print(f'\nPlotting performance for {title}...')
         plt.figure(figsize=(12, 8))
         ax = plt.gca()  # Get the current Axes instance on the current figure
 
@@ -72,6 +73,7 @@ class MatrixPerformanceTest(unittest.TestCase):
         # plt.show()
 
     def execute_operations(self, sizes, operations, results):
+        print(f'\nExecuting operations for sizes: {sizes}')
         for size in sizes:
             shape = (size, size)
             dense_matrix = DenseMatrix.random(shape)
@@ -87,6 +89,7 @@ class MatrixPerformanceTest(unittest.TestCase):
                 results[op_name]['Sparse'].append(sparse_time)
         return results
     def generate_solvable_matrix(self, size, regularization_factor=1e-5):
+        print(f'Generating solvable matrix of size {size}...')
         # Ensure the matrix is non-singular by starting with an identity matrix and adding random noise
         A = np.eye(size) + np.random.rand(size, size) * regularization_factor
         # Adding a small value to diagonal elements to ensure the matrix is well-conditioned
@@ -99,6 +102,7 @@ class MatrixPerformanceTest(unittest.TestCase):
 
         return A, b
     def generate_solvable_sparse_matrix(self, size, density=0.01, regularization_factor=1e-5):
+        print(f'Generating solvable sparse matrix of size {size}...')
         # Create a random sparse matrix
         A = sparse_rand(size, size, density=density, format='coo')
         
@@ -117,6 +121,7 @@ class MatrixPerformanceTest(unittest.TestCase):
         return A, b
     def test_basic_operations(self):
         """Tests and plots basic operations (addition, multiplication, subtraction) on DenseMatrix and SparseMatrixCOO."""
+        print(f'\nTesting basic operations for sizes: {sizes}')
         operations = {
             'addition': lambda x: x + x,
             'multiplication': lambda x: x @ x,
@@ -136,6 +141,7 @@ class MatrixPerformanceTest(unittest.TestCase):
 
     def test_norm_operations(self):
         """Tests and plots norm operations (L1, L2) on DenseMatrix and SparseMatrixCOO."""
+        print(f'\nTesting norm operations for sizes: {sizes}')
         operations = {
             'L1': lambda x: x.L1_norm(),
             'L2': lambda x: x.L2_norm(),
@@ -152,6 +158,7 @@ class MatrixPerformanceTest(unittest.TestCase):
 
     def test_svd_operations(self):
         """Tests and plots SVD operations on DenseMatrix and SparseMatrixCOO."""
+        print(f'\nTesting SVD operations for sizes: {sizes}')
         operations = {
             'svd': lambda x: x.svd(),
         }
@@ -165,6 +172,7 @@ class MatrixPerformanceTest(unittest.TestCase):
             )
     def test_eigenvalue_operations(self):
         """Tests and plots eigenvalue operations on DenseMatrix and SparseMatrixCOO."""
+        print(f'\nTesting eigenvalue operations for sizes: {sizes}')
         operations = {
             'compute_eigenvalues': lambda x: x.compute_eigenvalues(),
         }
@@ -179,6 +187,7 @@ class MatrixPerformanceTest(unittest.TestCase):
 
     def test_solve_operations(self):
         # Initialize results with the required structure
+        print(f'\nTesting solve operations for sizes: {sizes}')
         results = {
             'Solve': {  # 'Solve' operation
                 'Dense': [],  # Empty list for dense matrix times
