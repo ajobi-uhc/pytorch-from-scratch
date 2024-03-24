@@ -121,6 +121,10 @@ class MatrixPerformanceTest(unittest.TestCase):
         return A, b
     def test_basic_operations(self):
         """Tests and plots basic operations (addition, multiplication, subtraction) on DenseMatrix and SparseMatrixCOO."""
+        print("Running tests and generating plots for all operations and multiple sizes")
+        print("Please wait, this may take a while...")
+        #add some nice log art
+        print(" _______  _______  _______  _______  _______  _______  _______  _______  _______  _______ ")
         print(f'\nTesting basic operations for sizes: {sizes}')
         operations = {
             'addition': lambda x: x + x,
