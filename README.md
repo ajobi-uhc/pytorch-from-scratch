@@ -4,10 +4,16 @@ This project aims to build a PyTorch-style library that allows students to learn
 
 ## How to Run the Code
 
-To run the code, execute the following command:
+To run the movie recommender and get a plot of singular values, execute the following command:
 
 ```bash
 python MovieRecommender.py
+```
+
+To run the entire performance testing suite for our library please run 
+
+```bash
+python MatrixPerformanceTest.py
 ```
 
 ## Dependencies
