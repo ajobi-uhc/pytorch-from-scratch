@@ -19,6 +19,8 @@ Make sure you have the following dependencies installed:
 - SciPy
 - mathplotlib
 
+You can run pip install -r requirements.txt
+
 Results:
 
 Plot of basic arithmetic matrix operation efficiency
