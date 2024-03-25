@@ -29,20 +29,38 @@ class SparseMatrixCOO(Tensor):
             raise ValueError("Other operand must be a SparseMatrixCOO instance")
         if self.shape != other.shape:
             raise ValueError("Shapes of the matrices must match")
-        rows = self.rows + other.rows
-        cols = self.cols + other.cols
-        values = self.values + other.values
-        return SparseMatrixCOO(rows, cols, values, self.shape)
-    
+
+        result_dict = {}
+        for row, col, value in zip(self.rows, self.cols, self.values):
+            result_dict[(row, col)] = value
+
+        for row, col, value in zip(other.rows, other.cols, other.values):
+            if (row, col) in result_dict:
+                result_dict[(row, col)] += value
+            else:
+                result_dict[(row, col)] = value
+
+        rows, cols, values = zip(*[(key[0], key[1], val) for key, val in result_dict.items()])
+        return SparseMatrixCOO(list(rows), list(cols), list(values), self.shape)
+
     def __sub__(self, other):
         if not isinstance(other, SparseMatrixCOO):
             raise ValueError("Other operand must be a SparseMatrixCOO instance")
         if self.shape != other.shape:
             raise ValueError("Shapes of the matrices must match")
-        rows = self.rows + other.rows
-        cols = self.cols + other.cols
-        values = self.values + [-val for val in other.values]
-        return SparseMatrixCOO(rows, cols, values, self.shape)
+
+        result_dict = {}
+        for row, col, value in zip(self.rows, self.cols, self.values):
+            result_dict[(row, col)] = value
+
+        for row, col, value in zip(other.rows, other.cols, other.values):
+            if (row, col) in result_dict:
+                result_dict[(row, col)] -= value
+            else:
+                result_dict[(row, col)] = -value
+
+        rows, cols, values = zip(*[(key[0], key[1], val) for key, val in result_dict.items()])
+        return SparseMatrixCOO(list(rows), list(cols), list(values), self.shape)
     
     
     def __mul__(self, other):
