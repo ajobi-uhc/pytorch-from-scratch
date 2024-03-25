@@ -161,10 +161,16 @@ class SparseMatrixCOO(Tensor):
         solution = sp.spsolve(scipy_sparse_matrix, b)
         return solution
     def transform_into_binary(self, threshold):
-        transform = lambda x: 1 if x > threshold else 0
-        rows = [transform(x) for x in self.rows]
-        cols = [transform(x) for x in self.cols]
-        values = [transform(x) for x in self.values]
-        return SparseMatrixCOO(rows, cols, values, self.shape)
+        transformed_indices_and_values = [
+            (row, col, 1) for row, col, value in zip(self.rows, self.cols, self.values) if value > threshold
+        ]
+
+        if not transformed_indices_and_values:
+            return SparseMatrixCOO([], [], [], self.shape)
+
+        new_rows, new_cols, new_values = zip(*transformed_indices_and_values)
+
+        return SparseMatrixCOO(list(new_rows), list(new_cols), list(new_values), self.shape)
+
 
 
