@@ -25,7 +25,7 @@ def recommend(liked_movie_index, V, amount_to_recommend):
     return recommended[:amount_to_recommend]
 
 def main():
-    shape = (50, 50)
+    shape = (1000, 50)
     dense_movie_data = DenseMatrix.random(shape)
     threshold = 0.7
     binary_movie_data = dense_movie_data.transform_into_binary(threshold)
